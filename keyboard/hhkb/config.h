@@ -22,9 +22,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define VENDOR_ID       0xFEED
 #define PRODUCT_ID      0xCAFE
 #define DEVICE_VER      0x0104
-#define MANUFACTURER    t.m.k.
-#define PRODUCT         HHKB mod
-#define DESCRIPTION     t.m.k. keyboard firmware for HHKB mod
+#define MANUFACTURER    PFU
+#define PRODUCT         HHKB Bean mod.
+#define DESCRIPTION     HHKB mod by Jongbin Jung, with custom firmware on a t.m.k. board
 
 
 /* matrix size */
@@ -41,11 +41,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 /* period of tapping(ms) */
-#define TAPPING_TERM    300
+#define TAPPING_TERM    200
 /* tap count needed for toggling a feature */
-#define TAPPING_TOGGLE  5
+#define TAPPING_TOGGLE  2
 /* Oneshot timeout(ms) */
-#define ONESHOT_TIMEOUT 300
+#define ONESHOT_TIMEOUT 600
 
 /* Boot Magic salt key: Space */
 #define BOOTMAGIC_KEY_SALT      KC_SPACE
@@ -56,7 +56,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *  These options are also useful to firmware size reduction.
  */
 /* disable debug print */
-//#define NO_DEBUG
+#define NO_DEBUG
 
 /* disable print */
 //#define NO_PRINT
