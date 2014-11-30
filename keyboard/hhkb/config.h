@@ -24,7 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define DEVICE_VER      0x0104
 #define MANUFACTURER    PFU
 #define PRODUCT         HHKB Bean mod.
-#define DESCRIPTION     HHKB mod by Jongbin Jung, with custom firmware on a t.m.k. board
+#define DESCRIPTION     HHKB mod by Jongbin Jung with custom firmware on a t.m.k. board
 
 
 /* matrix size */
