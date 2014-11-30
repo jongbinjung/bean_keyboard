@@ -53,20 +53,20 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
      * ,-----------------------------------------------------------.
      * |Esc| F1| F2| F3| F4| F5| F6| F7| F8| F9|F10|F11|F12|Ins|Del|
      * |-----------------------------------------------------------|
-     * |Tab  |Hom|PgD|Up |PgU|End|Hom|PgD|PgUlEnd|   |   |   |Backs|
+     * |Tab  |Hom|WRD|Up |PgU|End|Hom|PgD|PgUlEnd|   |   |   |Backs|
      * |-----------------------------------------------------------|
      * |Contro|   |Lef|Dow|Rig|   |Lef|Dow|Up |Rig|   |   |Return  |
      * |-----------------------------------------------------------|
-     * |Shift   |   |   |   |   |   |Hom|PgD|PgUlEnd|Fn0|Shift |   |
+     * |Shift   |   |DEL|   |   |BCK|Hom|PgD|PgUlEnd|Fn0|Shift |   |
      * `-----------------------------------------------------------'
      *       |Alt|Gui  |          Space        |Gui  |Alt|
      *       `-------------------------------------------'
      */
     [2] = \
     KEYMAP(GRV, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, INS, DEL, \
-           TAB, HOME,PGDN,UP,  PGUP,END, HOME,PGDN,PGUP,END, NO,  NO,  NO,  BSPC, \
+           TAB, HOME,FN20,UP,  PGUP,END, HOME,PGDN,PGUP,END, NO,  NO,  NO,  BSPC, \
            LCTL,NO,  LEFT,DOWN,RGHT,NO,  LEFT,DOWN,UP,  RGHT,NO,  NO,  ENT, \
-           LSFT,NO,  NO,  NO,  NO,  NO,  HOME,PGDN,PGUP,END, TRNS,RSFT,NO, \
+           LSFT,NO, DEL,  NO,  NO,FN21,  HOME,PGDN,PGUP,END, TRNS,RSFT,NO, \
                 LALT,LGUI,          SPC,                RGUI,RALT),
 
     /* Layer 3: Mouse mode(IJKL)[Semicolon]
@@ -183,6 +183,8 @@ enum macro_id {
     HELLO,
     VOLUP,
     ALT_TAB,
+    VI_WORD,
+    VI_BACK,
 };
 
 
@@ -208,8 +210,8 @@ const uint16_t fn_actions[] PROGMEM = {
 
 //  [x] = ACTION_LMOD_TAP_KEY(KC_LCTL, KC_BSPC),        // LControl with tap Backspace
 //  [x] = ACTION_LMOD_TAP_KEY(KC_LCTL, KC_ESC),         // LControl with tap Esc
-//  [x] = ACTION_MACRO(HELLO),                          // Macro: say hello
-//  [x] = ACTION_MACRO(VOLUP),                          // Macro: media key
+    [20] = ACTION_MACRO(VI_WORD),                          // Macro: vi navigation 'w'
+    [21] = ACTION_MACRO(VI_BACK),                          // Macro: vi navigation 'b'
 };
 
 
@@ -231,6 +233,14 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
             return (record->event.pressed ?
                     MACRO( D(LALT), D(TAB), END ) :
                     MACRO( U(TAB), END ));
+        case VI_WORD:
+            return (record->event.pressed ?
+                    MACRO( D(LALT), D(RGHT), END ) :
+                    MACRO( U(RGHT), U(LALT), END ));
+        case VI_BACK:
+            return (record->event.pressed ?
+                    MACRO( D(LALT), D(LEFT), END ) :
+                    MACRO( U(LEFT), U(LALT), END ));
     }
     return MACRO_NONE;
 }
