@@ -1,5 +1,21 @@
 /* 
- * Hasu: my personal keymap
+ * Bean: personal keymap based on hasu's template
+ *
+ * Function keys
+ * Fn0  default layer (not used)
+ * Fn1  HHKB layer w/ multi-tap toggle
+ * Fn2  Vi navigation layer
+ * Fn3  Mouse-key layer (semi-colon)
+ * Fn4  Matias layer with Space
+ * Fn5  ALT_TAB
+ * Fn6  RControl with Enter
+ * Fn7  LShift with tap '('
+ * Fn8  RShift with tap ')'
+ * Fn9  Numkey later with Tab
+ * Fn10 Oneshot shift
+ *
+ * Fn20 Vi action 'w'
+ * Fn21 Vi action 'b'
  */
 #include "keymap_common.h"
 
@@ -17,16 +33,16 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
      * |-----------------------------------------------------------|
      * |Contro|  A|  S|  D|  F|  G|  H|  J|  K|  L|Fn3|  '|Fn6     |
      * |-----------------------------------------------------------|
-     * |Fn7     |  Z|  X|  C|  V|  B|  N|  M|  ,|  .|Fn2|Fn10  |Fn1|
+     * |Fn7     |  Z|  X|  C|  V|  B|  N|  M|  ,|  .|Fn2| Fn8  |Fn1|
      * `-----------------------------------------------------------'
-     *       |Alt|Gui  |         Fn4           |Fn5  |Gui|
+     *       |Alt|Gui  |         Fn4           |Gui  |Fn5|
      *       `-------------------------------------------'
      */
     [0] = \
     KEYMAP(ESC, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, BSLS,GRV, \
            FN9, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,   LBRC,RBRC,BSPC, \
            LCTL,A,   S,   D,   F,   G,   H,   J,   K,   L,   FN3, QUOT,FN6, \
-           FN7, Z,   X,   C,   V,   B,   N,   M,   COMM,DOT, FN2, FN10,FN1, \
+           FN7, Z,   X,   C,   V,   B,   N,   M,   COMM,DOT, FN2, FN8,FN1, \
                 LALT,LGUI,          FN4,                RGUI, FN5),
 
     /* Layer 1: HHKB mode[HHKB Fn]
@@ -69,7 +85,7 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
            LSFT,NO, DEL,  NO,  NO,FN21,  HOME,PGDN,PGUP,END, TRNS,RSFT,NO, \
                 LALT,LGUI,          SPC,                RGUI,RALT),
 
-    /* Layer 3: Mouse mode(IJKL)[Semicolon]
+    /* Layer 3: Mouse mode(HJKL)[Semicolon]
      * ,-----------------------------------------------------------.
      * |Esc| F1| F2| F3| F4| F5| F6| F7| F8| F9|F10|F11|F12|Ins|Del|
      * |-----------------------------------------------------------|
@@ -86,7 +102,7 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
     [3] = \
     KEYMAP(GRV, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, INS, DEL, \
            FN8, NO,  NO,  NO,  NO,  NO,  WH_L,WH_D,MS_U,WH_U,WH_R,WBAK,WFWD,FN8, \
-           LCTL,ACL0,ACL1,ACL2,ACL2,NO,  NO,  MS_L,MS_D,MS_R,TRNS,NO,  ENT, \
+           LCTL,ACL0,ACL1,ACL2,ACL2,NO,  MS_L,MS_D,MS_U,MS_R,TRNS,NO,  ENT, \
            LSFT,NO,  NO,  NO,  NO,  BTN3,BTN2,BTN1,BTN4,BTN5,NO,  RSFT,NO, \
                 LALT,LGUI,          BTN1,                TRNS,TRNS),
 
@@ -129,47 +145,6 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
            TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,   1,   2,   3, ENT,TRNS,TRNS, \
            TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,   0,   0,   COMM,DOT,TRNS,TRNS,TRNS, \
                 TRNS,TRNS,            TRNS,                TRNS,TRNS),
-#if 0
-    /* Layer 3: Mouse mode(HJKL)[Semicolon]
-     * ,-----------------------------------------------------------.
-     * |Esc| F1| F2| F3| F4| F5| F6| F7| F8| F9|F10|F11|F12|Ins|Del|
-     * |-----------------------------------------------------------|
-     * |Tab  |   |   |   |   |   |MwL|MwD|MwU|MwR|   |   |   |Backs|
-     * |-----------------------------------------------------------|
-     * |Contro|   |   |   |   |   |McL|McD|McU|McR|Fn0|   |Return  |
-     * |-----------------------------------------------------------|
-     * |Shift   |   |   |   |   |Mb3|Mb2|Mb1|Mb4|Mb5|   |Shift |   |
-     * `-----------------------------------------------------------'
-     *      |Gui |Alt  |          Mb1          |Alt  |Fn0|
-     *      `--------------------------------------------'
-     * Mc: Mouse Cursor / Mb: Mouse Button / Mw: Mouse Wheel 
-     */
-    KEYMAP(GRV, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, INS, DEL, \
-           TAB, NO,  NO,  NO,  NO,  NO,  WH_L,WH_D,WH_U,WH_R,NO,  NO,  NO,  BSPC, \
-           LCTL,NO,  ACL0,ACL1,ACL2,NO,  MS_L,MS_D,MS_U,MS_R,TRNS,QUOT,ENT, \
-           LSFT,NO,  NO,  NO,  NO,  BTN3,BTN2,BTN1,BTN4,BTN5,SLSH,RSFT,NO, \
-                LGUI,LALT,          BTN1,               RALT,TRNS),
-
-    /* Layer4: Mouse mode(HJKL)[Space]
-     * ,-----------------------------------------------------------.
-     * |Esc| F1| F2| F3| F4| F5| F6| F7| F8| F9|F10|F11|F12|Ins|Del|
-     * |-----------------------------------------------------------|
-     * |Tab  |   |   |   |   |   |MwL|MwD|MwU|MwR|   |Wbk|Wfr|Alt-T|
-     * |-----------------------------------------------------------|
-     * |Contro|   |   |   |   |   |McL|McD|McU|McR|Fn0|   |Return  |
-     * |-----------------------------------------------------------|
-     * |Shift   |   |   |   |   |Mb3|Mb2|Mb1|Mb4|Mb5|   |Shift |   |
-     * `-----------------------------------------------------------'
-     *      |Gui |Alt  |          Fn0          |Alt  |Fn0|
-     *      `--------------------------------------------'
-     * Mc: Mouse Cursor / Mb: Mouse Button / Mw: Mouse Wheel 
-     */
-    KEYMAP(GRV, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, INS, DEL, \
-           FN8, NO,  NO,  NO,  NO,  NO,  WH_L,WH_D,WH_U,WH_R,NO,  WBAK,WFWD,FN8, \
-           LCTL,NO,  ACL0,ACL1,ACL2,NO,  MS_L,MS_D,MS_U,MS_R,BTN1,NO,  ENT, \
-           LSFT,NO,  NO,  NO,  NO,  BTN3,BTN2,BTN1,BTN4,BTN5,NO,  RSFT,NO, \
-                LGUI,LALT,          TRNS,               RALT,RGUI),
-#endif
 };
 
 
@@ -177,6 +152,7 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
 /* id for user defined functions */
 enum function_id {
     LSHIFT_LPAREN,
+    RSHIFT_RPAREN,
 };
 
 enum macro_id {
@@ -201,10 +177,10 @@ const uint16_t fn_actions[] PROGMEM = {
     [2] = ACTION_LAYER_TAP_KEY(2, KC_SLASH),          // Cursor layer with Slash*
     [3] = ACTION_LAYER_TAP_KEY(3, KC_SCLN),           // Mousekey layer with Semicolon*
     [4] = ACTION_LAYER_TAP_KEY(4, KC_SPC),            // Matias layer with Space
-    [5] = ACTION_LAYER_MOMENTARY(3),                  // Mousekey layer
+    [5] = ACTION_MACRO(ALT_TAB),                      // Application switching
     [6] = ACTION_MODS_TAP_KEY(MOD_RCTL, KC_ENT),      // RControl with tap Enter
     [7] = ACTION_FUNCTION_TAP(LSHIFT_LPAREN),           // Function: LShift with tap '('
-    [8] = ACTION_MACRO(ALT_TAB),                      // Application switching
+    [8] = ACTION_FUNCTION_TAP(RSHIFT_RPAREN),         // RShift with tap ')'
     [9] = ACTION_LAYER_TAP_KEY(5, KC_TAB),
     [10] = ACTION_MODS_ONESHOT(MOD_RSFT),              // Oneshot Shift
 
@@ -282,6 +258,33 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
                     record->tap.count = 0;  // ad hoc: cancel tap
                 } else {
                     unregister_mods(MOD_BIT(KC_LSHIFT));
+                }
+            }
+            break;
+        case RSHIFT_RPAREN:
+            // Shift parentheses example: RShft + tap ')'
+            // http://stevelosh.com/blog/2012/10/a-modern-space-cadet/#shift-parentheses
+            // http://geekhack.org/index.php?topic=41989.msg1304899#msg1304899
+            if (record->event.pressed) {
+                if (record->tap.count > 0 && !record->tap.interrupted) {
+                    if (record->tap.interrupted) {
+                        dprint("tap interrupted\n");
+                        register_mods(MOD_BIT(KC_RSHIFT));
+                    }
+                } else {
+                    register_mods(MOD_BIT(KC_RSHIFT));
+                }
+            } else {
+                if (record->tap.count > 0 && !(record->tap.interrupted)) {
+                    add_weak_mods(MOD_BIT(KC_RSHIFT));
+                    send_keyboard_report();
+                    register_code(KC_0);
+                    unregister_code(KC_0);
+                    del_weak_mods(MOD_BIT(KC_RSHIFT));
+                    send_keyboard_report();
+                    record->tap.count = 0;  // ad hoc: cancel tap
+                } else {
+                    unregister_mods(MOD_BIT(KC_RSHIFT));
                 }
             }
             break;
