@@ -180,7 +180,6 @@ enum function_id {
 };
 
 enum macro_id {
-    HELLO,
     VOLUP,
     ALT_TAB,
 };
@@ -230,7 +229,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
         case ALT_TAB:
             return (record->event.pressed ?
                     MACRO( D(LALT), D(TAB), END ) :
-                    MACRO( U(TAB), END ));
+                    MACRO( U(TAB), U(TAB), END ));
     }
     return MACRO_NONE;
 }
