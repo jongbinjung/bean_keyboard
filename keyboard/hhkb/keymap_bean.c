@@ -69,7 +69,7 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
      * ,-----------------------------------------------------------.
      * |Esc| F1| F2| F3| F4| F5| F6| F7| F8| F9|F10|F11|F12|Ins|Del|
      * |-----------------------------------------------------------|
-     * |Tab  |Hom|WRD|Up |PgU|End|Hom|PgD|PgUlEnd|   |   |   |Backs|
+     * |Tab  |Hom|PgD|Up |PgU|End|Hom|F12|PgUlEnd|   |   |   |Backs|
      * |-----------------------------------------------------------|
      * |Contro|   |Lef|Dow|Rig|   |Lef|Dow|Up |Rig|   |   |Return  |
      * |-----------------------------------------------------------|
@@ -80,7 +80,7 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
      */
     [2] = \
     KEYMAP(GRV, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, INS, DEL, \
-           TAB, HOME,FN20,UP,  PGUP,END, HOME,PGDN,PGUP,END, NO,  NO,  NO,  BSPC, \
+           TAB, HOME,PGDN,UP,  PGUP,END, HOME, F12,PGUP,END, NO,  NO,  NO,  BSPC, \
            LCTL,NO,  LEFT,DOWN,RGHT,NO,  LEFT,DOWN,UP,  RGHT,NO,  NO,  ENT, \
            LSFT,NO, DEL,  NO,  NO,FN21,  HOME,PGDN,PGUP,END, TRNS,RSFT,NO, \
                 LALT,LGUI,          SPC,                RGUI,RALT),
@@ -156,7 +156,6 @@ enum function_id {
 };
 
 enum macro_id {
-    HELLO,
     VOLUP,
     ALT_TAB,
     VI_WORD,
@@ -208,7 +207,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
         case ALT_TAB:
             return (record->event.pressed ?
                     MACRO( D(LALT), D(TAB), END ) :
-                    MACRO( U(TAB), END ));
+                    MACRO( U(TAB), U(LALT), END ));
         case VI_WORD:
             return (record->event.pressed ?
                     MACRO( D(LALT), D(RGHT), END ) :
