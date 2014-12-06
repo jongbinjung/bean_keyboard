@@ -196,6 +196,10 @@ const uint16_t fn_actions[] PROGMEM = {
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 {
     switch (id) {
+        //case HELLO:
+            //return (record->event.pressed ?
+                    //MACRO( I(0), T(H), T(E), T(L), T(L), W(255), T(O), END ) :
+                    //MACRO_NONE );
         case VOLUP:
             return (record->event.pressed ?
                     MACRO( D(VOLU), U(VOLU), END ) :
