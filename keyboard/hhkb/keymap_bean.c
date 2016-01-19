@@ -1,4 +1,4 @@
-/* 
+/*
  * Bean: personal keymap based on hasu's template
  *
  * Function keys
@@ -57,7 +57,7 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
      * `-----------------------------------------------------------'
      *       |Alt|Gui  |         Space         |Gui  |Alt|
      *       `-------------------------------------------'
-     */ 
+     */
     [1] = \
     KEYMAP(GRV, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, INS, DEL, \
            CAPS,NO,  NO,  NO,  NO,  NO,  NO,  NO,  PSCR,SLCK,PAUS, UP,  NO,  BSPC, \
