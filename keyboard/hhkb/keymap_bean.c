@@ -13,6 +13,7 @@
  * Fn8  RShift with tap ')'
  * Fn9  Numkey later with Tab
  * Fn10 Oneshot shift
+ * Fn11 Ctrl with tap Esc
  *
  * Fn20 Vi action 'w'
  * Fn21 Vi action 'b'
@@ -31,7 +32,7 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
      * |-----------------------------------------------------------|
      * |NmTab|  Q|  W|  E|  R|  T|  Y|  U|  I|  O|  P|  [|  ]|Backs|
      * |-----------------------------------------------------------|
-     * |Contro|  A|  S|  D|  F|  G|  H|  J|  K|  L|Fn3|  '|Fn6     |
+     * |Fn11  |  A|  S|  D|  F|  G|  H|  J|  K|  L|Fn3|  '|Fn6     |
      * |-----------------------------------------------------------|
      * |Fn7     |  Z|  X|  C|  V|  B|  N|  M|  ,|  .|Fn2| Fn8  |Fn1|
      * `-----------------------------------------------------------'
@@ -41,7 +42,7 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
     [0] = \
     KEYMAP(ESC, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, BSLS,GRV, \
            FN9, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,   LBRC,RBRC,BSPC, \
-           LCTL,A,   S,   D,   F,   G,   H,   J,   K,   L,   FN3, QUOT,FN6, \
+           FN11,A,   S,   D,   F,   G,   H,   J,   K,   L,   FN3, QUOT,FN6, \
            FN7, Z,   X,   C,   V,   B,   N,   M,   COMM,DOT, FN2, FN8,FN1, \
                 LALT,LGUI,          FN4,                RGUI, CAPS),
 
@@ -51,7 +52,7 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
      * |-----------------------------------------------------------|
      * |Caps |   |   |   |   |   |   |   |Psc|Slk|Pus|Up |   |Backs|
      * |-----------------------------------------------------------|
-     * |Contro|VoD|VoU|Mut|   |   |  *|  /|Hom|PgU|Lef|Rig|Enter   |
+     * |Fn11  |VoD|VoU|Mut|   |   |  *|  /|Hom|PgU|Lef|Rig|Enter   |
      * |-----------------------------------------------------------|
      * |Shift   |   |   |   |   |   |  +|  -|End|PgD|Dow|Shift |   |
      * `-----------------------------------------------------------'
@@ -61,7 +62,7 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
     [1] = \
     KEYMAP(GRV, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, INS, DEL, \
            CAPS,NO,  NO,  NO,  NO,  NO,  NO,  NO,  PSCR,SLCK,PAUS, UP,  NO,  BSPC, \
-           LCTL,VOLD,VOLU,MUTE,NO,  NO,  PAST,PSLS,HOME,PGUP,LEFT,RGHT,ENT, \
+           FN11,VOLD,VOLU,MUTE,NO,  NO,  PAST,PSLS,HOME,PGUP,LEFT,RGHT,ENT, \
            LSFT,NO,  NO,  NO,  NO,  NO,  PPLS,PMNS,END, PGDN,DOWN,RSFT,TRNS, \
                 LALT,LGUI,          SPC,                RGUI,RALT),
 
@@ -151,6 +152,7 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
 
 /* id for user defined functions */
 enum function_id {
+    CTRL_ESC,
     LSHIFT_LPAREN,
     RSHIFT_RPAREN,
 };
@@ -178,15 +180,16 @@ const action_t fn_actions[] PROGMEM = {
     [4] = ACTION_LAYER_TAP_KEY(4, KC_SPC),            // Matias layer with Space
     [5] = ACTION_MACRO(ALT_TAB),                      // Application switching
     [6] = ACTION_MODS_TAP_KEY(MOD_RCTL, KC_ENT),      // RControl with tap Enter
-    [7] = ACTION_FUNCTION_TAP(LSHIFT_LPAREN),           // Function: LShift with tap '('
+    [7] = ACTION_FUNCTION_TAP(LSHIFT_LPAREN),         // Function: LShift with tap '('
     [8] = ACTION_FUNCTION_TAP(RSHIFT_RPAREN),         // RShift with tap ')'
-    [9] = ACTION_LAYER_TAP_KEY(5, KC_TAB),
-//  [10] = ACTION_MODS_ONESHOT(MOD_RSFT),              // Oneshot Shift
+    [9] = ACTION_LAYER_TAP_KEY(5, KC_TAB),            // Tab for numpad layer
+//  [10] = ACTION_MODS_ONESHOT(MOD_RSFT),             // Oneshot Shift
+    [11] = ACTION_FUNCTION_TAP(CTRL_ESC),             // Ctrl with tap ESC
 
-//  [x] = ACTION_LMOD_TAP_KEY(KC_LCTL, KC_BSPC),        // LControl with tap Backspace
-//  [x] = ACTION_LMOD_TAP_KEY(KC_LCTL, KC_ESC),         // LControl with tap Esc
-    [20] = ACTION_MACRO(VI_WORD),                          // Macro: vi navigation 'w'
-    [21] = ACTION_MACRO(VI_BACK),                          // Macro: vi navigation 'b'
+//  [x] = ACTION_LMOD_TAP_KEY(KC_LCTL, KC_BSPC),      // LControl with tap Backspace
+//  [x] = ACTION_LMOD_TAP_KEY(KC_LCTL, KC_ESC),       // LControl with tap Esc
+    [20] = ACTION_MACRO(VI_WORD),                     // Macro: vi navigation 'w'
+    [21] = ACTION_MACRO(VI_BACK),                     // Macro: vi navigation 'b'
 };
 
 
@@ -233,6 +236,29 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
     dprint("\n");
 
     switch (id) {
+        case CTRL_ESC:
+            // Tap Ctrl to ESC
+            if (record->event.pressed) {
+                if (record->tap.count > 0 && !record->tap.interrupted) {
+                    if (record->tap.interrupted) {
+                        dprint("tap interrupted\n");
+                        register_mods(MOD_BIT(KC_LCTRL));
+                    }
+                } else {
+                    register_mods(MOD_BIT(KC_LCTRL));
+                }
+            } else {
+                if (record->tap.count > 0 && !(record->tap.interrupted)) {
+                    send_keyboard_report();
+                    register_code(KC_ESC);
+                    unregister_code(KC_ESC);
+                    send_keyboard_report();
+                    record->tap.count = 0;  // ad hoc: cancel tap
+                } else {
+                    unregister_mods(MOD_BIT(KC_LCTRL));
+                }
+            }
+            break;
         case LSHIFT_LPAREN:
             // Shift parentheses example: LShft + tap '('
             // http://stevelosh.com/blog/2012/10/a-modern-space-cadet/#shift-parentheses
