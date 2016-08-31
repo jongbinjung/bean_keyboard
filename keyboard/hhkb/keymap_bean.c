@@ -65,27 +65,7 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
            LSFT,NO,  NO,  NO,  NO,  NO,  PPLS,PMNS,END, PGDN,DOWN,RSFT,TRNS, \
                 LALT,LGUI,          SPC,                RGUI,RALT),
 
-    /* Layer 2: Vi mode[Slash]
-     * ,-----------------------------------------------------------.
-     * |Esc| F1| F2| F3| F4| F5| F6| F7| F8| F9|Hom|F11|F12|Ins|Del|
-     * |-----------------------------------------------------------|
-     * |Tab  |Hom|WRD|Up |PgU|End|Hom|F12|PgUlEnd|   |   |   |Backs|
-     * |-----------------------------------------------------------|
-     * |Contro|   |Lef|Dow|Rig|   |Lef|Dow|Up |Rig|   |   |Return  |
-     * |-----------------------------------------------------------|
-     * |Shift   |   |DEL|   |   |BCK|Hom|PgD|PgUlEnd|Fn0|Shift |   |
-     * `-----------------------------------------------------------'
-     *       |Alt|Gui  |          Space        |Gui  |Alt|
-     *       `-------------------------------------------'
-     */
-    [2] = \
-    KEYMAP(GRV, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  HOME, F11, F12, INS, DEL, \
-           TAB, HOME,FN20,UP,  PGUP,END, HOME, F12,PGUP,END, NO,  NO,  NO,  BSPC, \
-           LCTL,NO,  LEFT,DOWN,RGHT,NO,  LEFT,DOWN,UP,  RGHT,NO,  NO,  ENT, \
-           LSFT,NO, DEL,  NO,  NO,FN21,  HOME,PGDN,PGUP,END, TRNS,RSFT,NO, \
-                LALT,LGUI,          SPC,                RGUI,RALT),
-
-    /* Layer 3: Mouse mode(HJKL)[Semicolon]
+    /* Layer 2: Mouse mode(HJKL)[Slash]
      * ,-----------------------------------------------------------.
      * |Esc| F1| F2| F3| F4| F5| F6| F7| F8| F9|F10|F11|F12|Ins|Del|
      * |-----------------------------------------------------------|
@@ -99,12 +79,32 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
      *      `--------------------------------------------'
      * Mc: Mouse Cursor / Mb: Mouse Button / Mw: Mouse Wheel8
      */
+    [2] = \
+    KEYMAP(GRV, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  HOME, F11, F12, INS, DEL, \
+           FN8, NO,  NO,  NO,  NO,  NO,  WH_L,WH_D,MS_U,WH_U,WH_R,WBAK,WFWD,FN8, \
+           LCTL,ACL0,ACL1,ACL2,ACL2,NO,  MS_L,MS_D,MS_U,MS_R,NO,NO,  ENT, \
+           LSFT,NO,  NO,  NO,  NO,  BTN3,BTN2,BTN1,BTN4,BTN5,TRNS, RSFT,NO, \
+                LALT,LGUI,          BTN1,                TRNS,TRNS),
+
+    /* Layer 3: Vi mode + media[Semicolon]
+     * ,-----------------------------------------------------------.
+     * |Esc| F1| F2| F3| F4| F5| F6| F7| F8| F9|Hom|F11|F12|Ins|Del|
+     * |-----------------------------------------------------------|
+     * |Tab  |Hom|WRD|Up |PgU|End|Hom|F12|PgUlEnd|   |   |   |Backs|
+     * |-----------------------------------------------------------|
+     * |Contro|Stp|Ply|Prv|Nxt|   |Lef|Dow|Up |Rig|   |   |Return  |
+     * |-----------------------------------------------------------|
+     * |Shift   |   |DEL|   |   |BCK|Hom|PgD|PgUlEnd|Fn0|Shift |   |
+     * `-----------------------------------------------------------'
+     *       |Alt|Gui  |          Space        |Gui  |Alt|
+     *       `-------------------------------------------'
+     */
     [3] = \
     KEYMAP(GRV, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, INS, DEL, \
-           FN8, NO,  NO,  NO,  NO,  NO,  WH_L,WH_D,MS_U,WH_U,WH_R,WBAK,WFWD,FN8, \
-           LCTL,ACL0,ACL1,ACL2,ACL2,NO,  MS_L,MS_D,MS_U,MS_R,TRNS,NO,  ENT, \
-           LSFT,NO,  NO,  NO,  NO,  BTN3,BTN2,BTN1,BTN4,BTN5,NO,  RSFT,NO, \
-                LALT,LGUI,          BTN1,                TRNS,TRNS),
+           TAB, HOME,FN20,UP,  PGUP,END, HOME, F12,PGUP,END, NO,  NO,  NO,  BSPC, \
+           LCTL,MSTP, MPLY,MPRV,MNXT,NO,  LEFT,DOWN,UP,  RGHT,TRNS,  NO,  ENT, \
+           LSFT,NO, DEL,  NO,  NO,FN21,  HOME,PGDN,PGUP,END, NO,RSFT,NO, \
+                LALT,LGUI,          SPC,                RGUI,RALT),
 
     /* Layer 4: Matias half-qwerty keyboard style[Space]
      * ,-----------------------------------------------------------.
@@ -181,7 +181,7 @@ const uint16_t fn_actions[] PROGMEM = {
     [7] = ACTION_FUNCTION_TAP(LSHIFT_LPAREN),           // Function: LShift with tap '('
     [8] = ACTION_FUNCTION_TAP(RSHIFT_RPAREN),         // RShift with tap ')'
     [9] = ACTION_LAYER_TAP_KEY(5, KC_TAB),
-    [10] = ACTION_MODS_ONESHOT(MOD_RSFT),              // Oneshot Shift
+//  [10] = ACTION_MODS_ONESHOT(MOD_RSFT),              // Oneshot Shift
 
 //  [x] = ACTION_LMOD_TAP_KEY(KC_LCTL, KC_BSPC),        // LControl with tap Backspace
 //  [x] = ACTION_LMOD_TAP_KEY(KC_LCTL, KC_ESC),         // LControl with tap Esc
@@ -210,12 +210,12 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                     MACRO( U(TAB), U(LALT), END ));
         case VI_WORD:
             return (record->event.pressed ?
-                    MACRO( D(LALT), D(RGHT), END ) :
-                    MACRO( U(RGHT), U(LALT), END ));
+                    MACRO( D(LCTL), D(RGHT), END ) :
+                    MACRO( U(RGHT), U(LCTL), END ));
         case VI_BACK:
             return (record->event.pressed ?
-                    MACRO( D(LALT), D(LEFT), END ) :
-                    MACRO( U(LEFT), U(LALT), END ));
+                    MACRO( D(LCTL), D(LEFT), END ) :
+                    MACRO( U(LEFT), U(LCTL), END ));
     }
     return MACRO_NONE;
 }
