@@ -91,20 +91,20 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
      * ,-----------------------------------------------------------.
      * |Esc| F1| F2| F3| F4| F5| F6| F7| F8| F9|Hom|F11|F12|Ins|Del|
      * |-----------------------------------------------------------|
-     * |Tab  |Hom|WRD|Up |PgU|End|Hom|F12|PgUlEnd|   |   |   |Backs|
+     * |Tab  |Hom|WRD|Up |PgU|End|Hom|PgU|PgU|End|   |   |   |Backs|
      * |-----------------------------------------------------------|
      * |Contro|Stp|Ply|Prv|Nxt|   |Lef|Dow|Up |Rig|   |   |Return  |
      * |-----------------------------------------------------------|
-     * |Shift   |   |DEL|   |   |BCK|Hom|PgD|PgUlEnd|Fn0|Shift |   |
+     * |Shift   |   |DEL|   |   |BCK|PgD|Hom|PgU|End|Fn0|Shift |   |
      * `-----------------------------------------------------------'
      *       |Alt|Gui  |          Space        |Gui  |Alt|
      *       `-------------------------------------------'
      */
     [3] = \
     KEYMAP(GRV, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, INS, DEL, \
-           TAB, HOME,FN20,UP,  PGUP,END, HOME, F12,PGUP,END, NO,  NO,  NO,  BSPC, \
+           TAB, HOME,FN20,UP,  PGUP,END, HOME, PGUP,PGUP,END, NO,  NO,  NO,  BSPC, \
            LCTL,MSTP, MPLY,MPRV,MNXT,NO,  LEFT,DOWN,UP,  RGHT,TRNS,  NO,  ENT, \
-           LSFT,NO, DEL,  NO,  NO,FN21,  HOME,PGDN,PGUP,END, NO,RSFT,NO, \
+           LSFT,NO, DEL,  NO,  NO,FN21,  PGDN,HOME,PGUP,END, NO,RSFT,NO, \
                 LALT,LGUI,          SPC,                RGUI,RALT),
 
     /* Layer 4: Matias half-qwerty keyboard style[Space]
@@ -199,10 +199,6 @@ const action_t fn_actions[] PROGMEM = {
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 {
     switch (id) {
-        //case HELLO:
-            //return (record->event.pressed ?
-                    //MACRO( I(0), T(H), T(E), T(L), T(L), W(255), T(O), END ) :
-                    //MACRO_NONE );
         case VOLUP:
             return (record->event.pressed ?
                     MACRO( D(VOLU), U(VOLU), END ) :
