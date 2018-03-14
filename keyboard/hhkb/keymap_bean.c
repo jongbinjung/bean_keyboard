@@ -5,15 +5,16 @@
  * Fn0  default layer (not used)
  * Fn1  HHKB layer w/ multi-tap toggle
  * Fn2  Vi navigation layer
- * Fn3  Mouse-key layer (semi-colon)
- * Fn4  Matias layer with Space
- * Fn5  ALT_TAB
+ * Fn3  Mouse-key layer (with tap for [;])
+ * Fn4  Matias layer (with tap for [Space])
+ * Fn5  FnNumkey layer (with tap for [F])
  * Fn6  RControl with Enter
  * Fn7  LShift with tap '('
  * Fn8  RShift with tap ')'
- * Fn9  Numkey later with Tab
+ * Fn9  Numkey layer (with tap for [Tab])
  * Fn10 Oneshot shift
  * Fn11 Ctrl with tap Esc
+ * Fn12  ALT_TAB
  *
  * Fn20 Vi action 'w'
  * Fn21 Vi action 'b'
@@ -28,7 +29,7 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
 #endif
     /* Layer 0: Default Layer
      * ,-----------------------------------------------------------.
-     * |Esc|  1|  2|  3|  4|  5|  6|  7|  8|  9|  0|  -|  =|  \|  `|
+     * |Fn5|  1|  2|  3|  4|  5|  6|  7|  8|  9|  0|  -|  =|  \|  `|
      * |-----------------------------------------------------------|
      * |NmTab|  Q|  W|  E|  R|  T|  Y|  U|  I|  O|  P|  [|  ]|Backs|
      * |-----------------------------------------------------------|
@@ -40,7 +41,7 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
      *       `-------------------------------------------'
      */
     [0] = \
-    KEYMAP(ESC, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, BSLS,GRV, \
+    KEYMAP(FN5, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, BSLS,GRV, \
            FN9, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,   LBRC,RBRC,BSPC, \
            FN11,A,   S,   D,   F,   G,   H,   J,   K,   L,   FN3, QUOT,FN6, \
            FN7, Z,   X,   C,   V,   B,   N,   M,   COMM,DOT, FN2, FN8,FN1, \
@@ -146,6 +147,26 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
            TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,   1,   2,   3, ENT,TRNS,TRNS, \
            TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,   0,   0,   COMM,DOT,TRNS,TRNS,TRNS, \
                 TRNS,TRNS,            TRNS,                TRNS,TRNS),
+
+    /* Layer 6: FnNumpad with Esc Layer
+     * ,-----------------------------------------------------------.
+     * |   | F1| F2| F3| F4| F5| F6| F7| F8| F9|F10|F11|F12|   |   |
+     * |-----------------------------------------------------------|
+     * |     |   |   |   |   |   |   | F4| F5| F6|     |   |   |   |
+     * |-----------------------------------------------------------|
+     * |      |   |   |   |   |   |   | F1| F2| F3|   |   |        |
+     * |-----------------------------------------------------------|
+     * |        |   |   |   |   |   |   |   |   |   |   |      |   |
+     * `-----------------------------------------------------------'
+     *       |   |     |                       |     |   |
+     *       `-------------------------------------------'
+     */
+    [6] = \
+    KEYMAP(TRNS,  F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9, F10, F11, F12,TRNS,TRNS, \
+           TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,  F4,  F5,  F6,TRNS,TRNS,TRNS,TRNS, \
+           TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,  F1,  F2,  F3,TRNS,TRNS,TRNS, \
+           TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, \
+                TRNS,TRNS,            TRNS,                TRNS,TRNS),
 };
 
 
@@ -178,13 +199,14 @@ const action_t fn_actions[] PROGMEM = {
     [2] = ACTION_LAYER_TAP_KEY(2, KC_SLASH),          // Cursor layer with Slash*
     [3] = ACTION_LAYER_TAP_KEY(3, KC_SCLN),           // Mousekey layer with Semicolon*
     [4] = ACTION_LAYER_TAP_KEY(4, KC_SPC),            // Matias layer with Space
-    [5] = ACTION_MACRO(ALT_TAB),                      // Application switching
+    [5] = ACTION_LAYER_TAP_KEY(6, KC_ESC),              // FnNum layer with Esc
     [6] = ACTION_MODS_TAP_KEY(MOD_RCTL, KC_ENT),      // RControl with tap Enter
     [7] = ACTION_FUNCTION_TAP(LSHIFT_LPAREN),         // Function: LShift with tap '('
     [8] = ACTION_FUNCTION_TAP(RSHIFT_RPAREN),         // RShift with tap ')'
     [9] = ACTION_LAYER_TAP_KEY(5, KC_TAB),            // Tab for numpad layer
 //  [10] = ACTION_MODS_ONESHOT(MOD_RSFT),             // Oneshot Shift
     [11] = ACTION_FUNCTION_TAP(CTRL_ESC),             // Ctrl with tap ESC
+    [12] = ACTION_MACRO(ALT_TAB),                      // Application switching
 
 //  [x] = ACTION_LMOD_TAP_KEY(KC_LCTL, KC_BSPC),      // LControl with tap Backspace
 //  [x] = ACTION_LMOD_TAP_KEY(KC_LCTL, KC_ESC),       // LControl with tap Esc
