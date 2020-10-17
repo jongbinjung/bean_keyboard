@@ -5,9 +5,9 @@
  * Fn0  default layer (not used)
  * Fn1  HHKB layer w/ multi-tap toggle
  * Fn2  Vi navigation layer
- * Fn3  Mouse-key layer (with tap for [;])
- * Fn4  Matias layer (with tap for [Space])
- * Fn5  FnNumkey layer (with tap for [F])
+ * Fn3  Mouse-key layer (with tap for [Space])
+ * ~~Fn4  Matias layer (with tap for [;])~~
+ * Fn5  FnNumkey layer (with tap for [Esc])
  * Fn6  RControl with Enter
  * Fn7  LShift with tap '('
  * Fn8  RShift with tap ')'
@@ -43,9 +43,9 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
     [0] = \
     KEYMAP(FN5, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, BSLS,GRV, \
            FN9, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,   LBRC,RBRC,BSPC, \
-           FN11,A,   S,   D,   F,   G,   H,   J,   K,   L,   FN3, QUOT,FN6, \
+           FN11,A,   S,   D,   F,   G,   H,   J,   K,   L,  SCLN, QUOT,FN6, \
            FN7, Z,   X,   C,   V,   B,   N,   M,   COMM,DOT, FN2, FN8,FN1, \
-                LALT,LGUI,          FN4,                RGUI, CAPS),
+                LALT,LGUI,          FN3,                RGUI, CAPS),
 
     /* Layer 1: HHKB mode[HHKB Fn]
      * ,-----------------------------------------------------------.
@@ -88,7 +88,7 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
            LSFT,NO,  NO,  NO,  NO,  BTN3,BTN2,BTN1,BTN4,BTN5,TRNS, RSFT,NO, \
                 LALT,LGUI,          BTN1,                TRNS,TRNS),
 
-    /* Layer 3: Vi mode + media[Semicolon]
+    /* Layer 3: Vi mode + media[Space]
      * ,-----------------------------------------------------------.
      * |Esc| F1| F2| F3| F4| F5| F6| F7| F8| F9|Hom|F11|F12|Ins|Del|
      * |-----------------------------------------------------------|
@@ -106,7 +106,7 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
            TAB, HOME,FN20,UP,  PGUP,END, HOME, PGUP,PGUP,END, NO,  NO,  NO,  BSPC, \
            LCTL,MSTP, MPLY,MPRV,MNXT,NO,  LEFT,DOWN,UP,  RGHT,TRNS,  NO,  ENT, \
            LSFT,NO, DEL,  NO,  NO,FN21,  PGDN,HOME,PGUP,END, NO,RSFT,NO, \
-                LALT,LGUI,          SPC,                RGUI,RALT),
+                LALT,LGUI,          TRNS,                RGUI,RALT),
 
     /* Layer 4: Matias half-qwerty keyboard style[Space]
      * ,-----------------------------------------------------------.
@@ -196,10 +196,10 @@ const action_t fn_actions[] PROGMEM = {
 #endif
     [0] = ACTION_DEFAULT_LAYER_SET(0),                // Default layer(not used)
     [1] = ACTION_LAYER_TAP_TOGGLE(1),                 // HHKB layer(toggle with 5 taps)
-    [2] = ACTION_LAYER_TAP_KEY(2, KC_SLASH),          // Cursor layer with Slash*
-    [3] = ACTION_LAYER_TAP_KEY(3, KC_SCLN),           // Mousekey layer with Semicolon*
-    [4] = ACTION_LAYER_TAP_KEY(4, KC_SPC),            // Matias layer with Space
-    [5] = ACTION_LAYER_TAP_KEY(6, KC_ESC),              // FnNum layer with Esc
+    [2] = ACTION_LAYER_TAP_KEY(2, KC_SLASH),          // Mousekey layer with Slash*
+    [3] = ACTION_LAYER_TAP_KEY(3, KC_SPC),            // Vim Nav layer with Space
+    [4] = ACTION_LAYER_TAP_KEY(4, KC_SCLN),           // Matias layer with Semicolon
+    [5] = ACTION_LAYER_TAP_KEY(6, KC_ESC),            // FnNum layer with Esc
     [6] = ACTION_MODS_TAP_KEY(MOD_RCTL, KC_ENT),      // RControl with tap Enter
     [7] = ACTION_FUNCTION_TAP(LSHIFT_LPAREN),         // Function: LShift with tap '('
     [8] = ACTION_FUNCTION_TAP(RSHIFT_RPAREN),         // RShift with tap ')'
@@ -231,12 +231,12 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                     MACRO( U(TAB), U(LALT), END ));
         case VI_WORD:
             return (record->event.pressed ?
-                    MACRO( D(LCTL), D(RGHT), END ) :
-                    MACRO( U(RGHT), U(LCTL), END ));
+                    MACRO( D(LGUI), D(RGHT), END ) :
+                    MACRO( U(RGHT), U(LGUI), END ));
         case VI_BACK:
             return (record->event.pressed ?
-                    MACRO( D(LCTL), D(LEFT), END ) :
-                    MACRO( U(LEFT), U(LCTL), END ));
+                    MACRO( D(LGUI), D(LEFT), END ) :
+                    MACRO( U(LEFT), U(LGUI), END ));
     }
     return MACRO_NONE;
 }
