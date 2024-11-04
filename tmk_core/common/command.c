@@ -19,7 +19,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "wait.h"
 #include "keycode.h"
 #include "host.h"
-#include "keymap.h"
 #include "print.h"
 #include "debug.h"
 #include "util.h"
@@ -134,7 +133,7 @@ static void command_common_help(void)
           "e:	eeprom\n"
 #endif
 
-#ifdef NKRO_ENABLE
+#if defined(NKRO_ENABLE) || defined(NKRO_6KRO_ENABLE)
           "n:	NKRO\n"
 #endif
 
@@ -145,6 +144,9 @@ static void command_common_help(void)
 }
 
 #ifdef BOOTMAGIC_ENABLE
+#include "keymap.h"
+__attribute__ ((weak)) void eeconfig_debug(void) {}
+
 static void print_eeconfig(void)
 {
     print("default_layer: "); print_dec(eeconfig_read_default_layer()); print("\n");
@@ -176,6 +178,8 @@ static void print_eeconfig(void)
     print(".enable: "); print_dec(bc.enable); print("\n");
     print(".level: "); print_dec(bc.level); print("\n");
 #endif
+
+    eeconfig_debug();
 }
 #endif
 
@@ -314,7 +318,7 @@ static bool command_common(uint8_t code)
 #ifdef COMMAND_ENABLE
             " COMMAND"
 #endif
-#ifdef NKRO_ENABLE
+#if defined(NKRO_ENABLE) || defined(NKRO_6KRO_ENABLE)
             " NKRO"
 #endif
 #ifdef KEYMAP_SECTION_ENABLE
@@ -336,7 +340,7 @@ static bool command_common(uint8_t code)
             print_val_hex8(host_keyboard_leds());
             print_val_hex8(keyboard_protocol);
             print_val_hex8(keyboard_idle);
-#ifdef NKRO_ENABLE
+#if defined(NKRO_ENABLE) || defined(NKRO_6KRO_ENABLE)
             print_val_hex8(keyboard_nkro);
 #endif
             print_val_hex32(timer_read32());
@@ -355,7 +359,7 @@ static bool command_common(uint8_t code)
 #   endif
 #endif
             break;
-#ifdef NKRO_ENABLE
+#if defined(NKRO_ENABLE) || defined(NKRO_6KRO_ENABLE)
         case KC_N:
             clear_keyboard(); //Prevents stuck keys.
             keyboard_nkro = !keyboard_nkro;

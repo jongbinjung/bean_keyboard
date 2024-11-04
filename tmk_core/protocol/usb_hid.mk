@@ -12,14 +12,19 @@ USB_HOST_SHIELD_SRC = \
 	$(USB_HOST_SHIELD_DIR)/parsetools.cpp \
 	$(USB_HOST_SHIELD_DIR)/message.cpp 
 
+# Version string
+TMK_USB_HOST_SHIELD_VERSION := $(shell (cd $(TMK_DIR)/$(USB_HOST_SHIELD_DIR); git rev-parse --short=6 HEAD || echo 'unknown') 2> /dev/null)
+OPT_DEFS += -DTMK_USB_HOST_SHIELD_VERSION=$(TMK_USB_HOST_SHIELD_VERSION)
+
 
 
 #
 # Arduino
 #
-ARDUINO_DIR = $(USB_HID_DIR)/arduino-1.0.1
+ARDUINO_DIR = $(USB_HID_DIR)/arduino-1.8.13
 ARDUINO_CORES_DIR = $(ARDUINO_DIR)/cores/arduino
 ARDUINO_CORES_SRC = \
+	$(ARDUINO_CORES_DIR)/abi.cpp \
 	$(ARDUINO_CORES_DIR)/Print.cpp \
 	$(ARDUINO_CORES_DIR)/Stream.cpp
 
@@ -49,7 +54,7 @@ SRC += $(USB_HOST_SHIELD_SRC)
 SRC += $(ARDUINO_CORES_SRC)
 
 
-OPT_DEFS += -DARDUINO=101
+OPT_DEFS += -DARDUINO=1813
 # Arduino USBCore needs USB_VID and USB_PID.
 #OPT_DEFS += -DARDUINO=101 -DUSB_VID=0x2341 -DUSB_PID=0x8036
 

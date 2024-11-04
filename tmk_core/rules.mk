@@ -139,6 +139,7 @@ CFLAGS += -Wstrict-prototypes
 CFLAGS += -Wa,-adhlns=$(@:%.o=%.lst)
 CFLAGS += $(patsubst %,-I%,$(EXTRAINCDIRS))
 CFLAGS += $(CSTANDARD)
+CFLAGS += -flto
 ifdef CONFIG_H
     CFLAGS += -include $(CONFIG_H)
 endif
@@ -173,6 +174,7 @@ CPPFLAGS += -Wundef
 CPPFLAGS += -Wa,-adhlns=$(@:%.o=%.lst)
 CPPFLAGS += $(patsubst %,-I%,$(EXTRAINCDIRS))
 #CPPFLAGS += $(CSTANDARD)
+CPPFLAGS += -flto
 ifdef CONFIG_H
     CPPFLAGS += -include $(CONFIG_H)
 endif
@@ -189,6 +191,7 @@ endif
 #       dump that will be displayed for a given single line of source input.
 ASFLAGS = $(ADEFS) -Wa,-adhlns=$(@:%.o=%.lst),-gstabs,--listing-cont-lines=100
 ASFLAGS += $(patsubst %,-I%,$(EXTRAINCDIRS))
+ASFLAGS += -flto
 ifdef CONFIG_H
     ASFLAGS += -include $(CONFIG_H)
 endif
@@ -261,6 +264,7 @@ LDFLAGS += $(PRINTF_LIB) $(SCANF_LIB) $(MATH_LIB)
 #LDFLAGS += -T linker_script.x
 # You can give EXTRALDFLAGS at 'make' command line.
 LDFLAGS += $(EXTRALDFLAGS)
+LDFLAGS += -flto
 
 
 
@@ -334,10 +338,10 @@ MSG_CREATING_LIBRARY = Creating library:
 
 
 # Define all object files.
-OBJ = $(patsubst %.c,$(OBJDIR)/%.o,$(patsubst %.cpp,$(OBJDIR)/%.o,$(patsubst %.S,$(OBJDIR)/%.o,$(SRC))))
+OBJ = $(patsubst %.c,$(OBJDIR)/%.o,$(patsubst %.cpp,$(OBJDIR)/%.cpp.o,$(patsubst %.S,$(OBJDIR)/%.o,$(SRC))))
 
 # Define all listing files.
-LST = $(patsubst %.c,$(OBJDIR)/%.lst,$(patsubst %.cpp,$(OBJDIR)/%.lst,$(patsubst %.S,$(OBJDIR)/%.lst,$(SRC))))
+LST = $(patsubst %.c,$(OBJDIR)/%.lst,$(patsubst %.cpp,$(OBJDIR)/%.cpp.lst,$(patsubst %.S,$(OBJDIR)/%.lst,$(SRC))))
 
 
 # Compiler flags to generate dependency files.
@@ -348,9 +352,9 @@ GENDEPFLAGS = -MMD -MP -MF .dep/$(subst /,_,$@).d
 # Combine all necessary flags and optional flags.
 # Add target processor to flags.
 # You can give extra flags at 'make' command line like: make EXTRAFLAGS=-DFOO=bar
-ALL_CFLAGS = -mmcu=$(MCU) $(CFLAGS) $(GENDEPFLAGS) $(EXTRAFLAGS)
-ALL_CPPFLAGS = -mmcu=$(MCU) -x c++ $(CPPFLAGS) $(GENDEPFLAGS) $(EXTRAFLAGS)
-ALL_ASFLAGS = -mmcu=$(MCU) -x assembler-with-cpp $(ASFLAGS) $(EXTRAFLAGS)
+ALL_CFLAGS = -mmcu=$(MCU) $(CFLAGS) $(GENDEPFLAGS) $(EXTRAFLAGS) $(EXTRACFLAGS)
+ALL_CPPFLAGS = -mmcu=$(MCU) -x c++ $(CPPFLAGS) $(GENDEPFLAGS) $(EXTRAFLAGS) $(EXTRACPPFLAGS)
+ALL_ASFLAGS = -mmcu=$(MCU) -x assembler-with-cpp $(ASFLAGS) $(EXTRAFLAGS) $(EXTRAASFLAGS)
 
 
 
@@ -561,7 +565,7 @@ $(OBJDIR)/%.o : %.c
 
 
 # Compile: create object files from C++ source files.
-$(OBJDIR)/%.o : %.cpp
+$(OBJDIR)/%.cpp.o : %.cpp
 	@echo
 	mkdir -p $(@D)
 	@echo $(MSG_COMPILING_CPP) $<
@@ -628,3 +632,9 @@ $(shell mkdir $(OBJDIR) 2>/dev/null)
 build elf hex eep lss sym coff extcoff \
 clean clean_list debug gdb-config show_path \
 program teensy dfu flip dfu-ee flip-ee dfu-start
+
+
+# Print out the value of a make variable.
+# https://stackoverflow.com/questions/16467718/how-to-print-out-a-variable-in-makefile
+print-%:
+	@echo $* = $($*)

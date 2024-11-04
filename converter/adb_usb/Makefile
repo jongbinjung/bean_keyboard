@@ -78,10 +78,6 @@ UNIMAP_ENABLE ?= yes		# Use unimap
 ACTIONMAP_ENABLE ?= no          # Use 16bit actionmap instead of 8bit keymap
 KEYMAP_SECTION_ENABLE ?= yes	# fixed address keymap for keymap editor
 
-# ADB Mice need acceleration for todays much bigger screens. 
-ADB_MOUSE_MAXACC ?= 8
-OPT_DEFS += -DADB_MOUSE_MAXACC=$(ADB_MOUSE_MAXACC)
-
 
 # Optimize size but this may cause error "relocation truncated to fit"
 #EXTRALDFLAGS = -Wl,--relax
