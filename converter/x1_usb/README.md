@@ -8,18 +8,15 @@ https://en.wikipedia.org/wiki/Sharp_X1
 
 Info
 ----
-Wiki: 
-
+Wiki:  
 https://github.com/tmk/tmk_keyboard/wiki
 
-X1 protocol: 
+X1 protocol:  
+http://www.x1center.org/resource/x1kbd.pdf  
+https://kyouichisato.blogspot.com/2014/07/sharp-x1-ps2.html  
+https://deskthority.net/viewtopic.php?t=26795  
 
-http://www.x1center.org/resource/x1kbd.pdf
-https://kyouichisato.blogspot.com/2014/07/sharp-x1-ps2.html
-https://deskthority.net/viewtopic.php?t=26795
-
-Firmware Code: 
-
+Firmware Code:  
 https://github.com/tmk/tmk_keyboard/tree/master/converter/x1_usb
 
 
