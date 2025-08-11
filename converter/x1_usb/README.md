@@ -2,7 +2,7 @@ X1 to USB keyboard converter
 ============================
 Can connect the Sharp X1 (turbo) keyboard over USB.
 
-The X1 was a Z80-based computer released in Japan from 1982 to 1987.
+The X1 was a Z80-based computer released in Japan from 1982 to 1987.  
 https://en.wikipedia.org/wiki/Sharp_X1
 
 
@@ -69,14 +69,11 @@ https://github.com/tmk/tmk_keyboard/wiki#debug
 Notes for keyboard
 ------------------
 This keyboard doesn't send scancodes like a normal keyboard -- it sends the ASCII code, which creates lots of collisions.
-A few keypress combinations cannot be told apart digitally, and some of those combinations will get ignored.
-It is recommended to use the CTRL key on the keyboard as the USB Alt key and the GRAPH key as USB Control key.
-This allows for more Control+key combinations.
+A few keypress combinations cannot be told apart digitally, and some of those combinations will get ignored or default to the most likely use-case.
 
 
 Locking CapsLock
 ----------------
 
-The converter supports the locking Capslock key. Use keycode `LCAP` instead of `CAPS` in your keymap.
-
+The converter supports the locking Capslock key. Use keycode `LCAP` instead of `CAPS` in your keymap.  
 The Kana key is also locking but currently not supported in tmk_core.
