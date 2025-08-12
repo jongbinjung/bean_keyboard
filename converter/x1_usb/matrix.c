@@ -388,8 +388,8 @@ static void process_x1_key(x1_data_t* data)
     } else {
         // Process Mode A packet - ASCII keys and modifiers
         if (debug_enable) {
-        xprintf("X1: Status:%02X ASCII:%02X\n", 
-                data->status, data->ascii);
+            xprintf("X1: Status:%02X ASCII:%02X\n", 
+                    data->status, data->ascii);
         }
         handle_ascii_key_press(data->ascii, data->status);
     }
