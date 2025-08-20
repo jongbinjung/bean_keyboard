@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "unimap_common.h"
 
-#define AC_FN0 ACTION_LAYER_MOMENTARY(1)
+#define AC_FN0 ACTION_LAYER_MODS(1, MOD_LSFT)
 #define AC_FN1 ACTION_LAYER_TOGGLE(2)
 
 
