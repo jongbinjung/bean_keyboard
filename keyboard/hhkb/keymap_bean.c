@@ -4,14 +4,14 @@
  * Function keys
  * Fn0  default layer (not used)
  * Fn1  HHKB layer w/ multi-tap toggle
- * Fn2  Vi navigation layer
- * Fn3  Mouse-key layer (with tap for [Space])
- * ~~Fn4  Matias layer (with tap for [;])~~
- * Fn5  FnNumkey layer (with tap for [Esc])
- * Fn6  RControl with Enter
- * Fn7  LShift with tap '('
- * Fn8  RShift with tap ')'
- * Fn9  Numkey layer (with tap for [Tab])
+ * Fn2  Hold: Mousekey layer Tap: [/]
+ * Fn3  Hold: Vi layer       Tap: [Space]
+ * ~~Fn4  Hold: Matias layer Tap: [;]~~
+ * Fn5  Hold: FnNumkey layer Tap: [Esc]
+ * Fn6  Hold: RControl       Tap: Enter
+ * Fn7  Hold: LShift         Tap: '('
+ * Fn8  Hold: RShift         Tap: ')'
+ * Fn9  Hold: Numkey layer   Tap: [Tab]
  * Fn10 Oneshot shift
  * Fn11 Ctrl with tap Esc
  * Fn12  ALT_TAB
@@ -33,11 +33,11 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
      * |-----------------------------------------------------------|
      * |NmTab|  Q|  W|  E|  R|  T|  Y|  U|  I|  O|  P|  [|  ]|Backs|
      * |-----------------------------------------------------------|
-     * |Fn11  |  A|  S|  D|  F|  G|  H|  J|  K|  L|Fn3|  '|Fn6     |
+     * |Fn11  |  A|  S|  D|  F|  G|  H|  J|  K|  L|  ;|  '|Fn6     |
      * |-----------------------------------------------------------|
      * |Fn7     |  Z|  X|  C|  V|  B|  N|  M|  ,|  .|Fn2| Fn8  |Fn1|
      * `-----------------------------------------------------------'
-     *       |Alt|Gui  |         Fn4           |Gui  |Caps|
+     *       |Alt|Gui  |         Fn3           |Gui  |Caps|
      *       `-------------------------------------------'
      */
     [0] = \
@@ -90,9 +90,9 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
 
     /* Layer 3: Vi mode + media[Space]
      * ,-----------------------------------------------------------.
-     * |Esc| F1| F2| F3| F4| F5| F6| F7| F8| F9|Hom|F11|F12|Ins|Del|
+     * |Esc| F1| F2| F3| F4| F5| F6| F7| F8| F9|F10|F11|F12|Ins|Del|
      * |-----------------------------------------------------------|
-     * |Tab  |Hom|WRD|Up |PgU|End|Hom|PgU|PgU|End|   |   |   |Backs|
+     * |Tab  |Hom|WRD|Up |PgU|End|Hom|PgU|PgU|End|   |Hom|End|Backs|
      * |-----------------------------------------------------------|
      * |Contro|Stp|Ply|Prv|Nxt|   |Lef|Dow|Up |Rig|   |   |Return  |
      * |-----------------------------------------------------------|
@@ -103,7 +103,7 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
      */
     [3] = \
     KEYMAP(GRV, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, INS, DEL, \
-           TAB, HOME,FN20,UP,  PGUP,END, HOME, PGUP,PGUP,END, NO,  NO,  NO,  BSPC, \
+           TAB, HOME,FN20,UP,  PGUP,END, HOME, PGUP,PGUP,END, NO, HOME, END, BSPC, \
            LCTL,MSTP, MPLY,MPRV,MNXT,NO,  LEFT,DOWN,UP,  RGHT,TRNS,  NO,  ENT, \
            LSFT,NO, DEL,  NO,  NO,FN21,  PGDN,HOME,PGUP,END, NO,RSFT,NO, \
                 LALT,LGUI,          TRNS,                RGUI,RALT),
@@ -206,7 +206,7 @@ const action_t fn_actions[] PROGMEM = {
     [9] = ACTION_LAYER_TAP_KEY(5, KC_TAB),            // Tab for numpad layer
 //  [10] = ACTION_MODS_ONESHOT(MOD_RSFT),             // Oneshot Shift
     [11] = ACTION_FUNCTION_TAP(CTRL_ESC),             // Ctrl with tap ESC
-    [12] = ACTION_MACRO(ALT_TAB),                      // Application switching
+    [12] = ACTION_MACRO(ALT_TAB),                     // Application switching
 
 //  [x] = ACTION_LMOD_TAP_KEY(KC_LCTL, KC_BSPC),      // LControl with tap Backspace
 //  [x] = ACTION_LMOD_TAP_KEY(KC_LCTL, KC_ESC),       // LControl with tap Esc
@@ -231,12 +231,12 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                     MACRO( U(TAB), U(LALT), END ));
         case VI_WORD:
             return (record->event.pressed ?
-                    MACRO( D(LGUI), D(RGHT), END ) :
-                    MACRO( U(RGHT), U(LGUI), END ));
+                    MACRO( D(LCTL), D(RGHT), END ) :
+                    MACRO( U(RGHT), U(LCTL), END ));
         case VI_BACK:
             return (record->event.pressed ?
-                    MACRO( D(LGUI), D(LEFT), END ) :
-                    MACRO( U(LEFT), U(LGUI), END ));
+                    MACRO( D(LCTL), D(LEFT), END ) :
+                    MACRO( U(LEFT), U(LCTL), END ));
     }
     return MACRO_NONE;
 }
